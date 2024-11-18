@@ -81,6 +81,7 @@
             <artifactId>aspectjweaver</artifactId>
         </dependency>
 
+<!--        knife4j的maven坐标-->
         <dependency>
             <groupId>com.github.xiaoymin</groupId>
             <artifactId>knife4j-spring-boot-starter</artifactId>
