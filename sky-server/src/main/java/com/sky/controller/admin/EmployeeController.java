@@ -3,8 +3,10 @@ package com.sky.controller.admin;
 import com.sky.constant.JwtClaimsConstant;
 import com.sky.dto.EmployeeDTO;
 import com.sky.dto.EmployeeLoginDTO;
+import com.sky.dto.EmployeePageQueryDTO;
 import com.sky.entity.Employee;
 import com.sky.properties.JwtProperties;
+import com.sky.result.PageResult;
 import com.sky.result.Result;
 import com.sky.service.EmployeeService;
 import com.sky.utils.JwtUtil;
@@ -12,10 +14,7 @@ import com.sky.vo.EmployeeLoginVO;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -28,6 +27,7 @@ import java.util.Map;
 @Slf4j
 public class EmployeeController {
 
+    //在controller中自动装配service，并调用service中的方法
     @Autowired
     private EmployeeService employeeService;
     @Autowired
@@ -40,6 +40,7 @@ public class EmployeeController {
      * @return
      */
     @PostMapping("/login")
+    @ApiOperation("员工登录")
     public Result<EmployeeLoginVO> login(@RequestBody EmployeeLoginDTO employeeLoginDTO) {
         log.info("员工登录：{}", employeeLoginDTO);
 
@@ -69,15 +70,10 @@ public class EmployeeController {
      * @return
      */
     @PostMapping("/logout")
+    @ApiOperation("员工登出")
     public Result<String> logout() {
         return Result.success();
     }
-
-    /**
-     * 新增员工
-     * @param employeeDTO
-     * @return
-     */
 
 
     /*TODO 学习笔记--controller
@@ -87,7 +83,11 @@ public class EmployeeController {
     并将DTO对象作为参数传入方法
     最后返回响应结果
     */
-
+    /**
+     * 新增员工
+     * @param employeeDTO
+     * @return
+     */
     @PostMapping
     @ApiOperation("新增员工")
     public Result save(@RequestBody EmployeeDTO employeeDTO){
@@ -96,4 +96,17 @@ public class EmployeeController {
         return Result.success();
     }
 
+    /**
+     * 员工分页查询
+     * @return
+     */
+    //由于查询功能前端传入的数据并不是head（json格式），所以传入参数不需要@Requestbody
+    @GetMapping("/page")
+    //接口文档规定的路径为/admin/employee/page，由于在类上已经有requestmapping：/admin/employee，只需要加/page即可
+    @ApiOperation("员工分页查询")
+    public Result<PageResult> page(EmployeePageQueryDTO employeePageQueryDTO){
+        log.info("员工分页查询参数：{}",employeePageQueryDTO);
+        PageResult pageResult=employeeService.pageQuery(employeePageQueryDTO);
+        return Result.success(pageResult);
+    }
 }
