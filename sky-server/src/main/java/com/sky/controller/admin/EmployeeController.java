@@ -101,8 +101,8 @@ public class EmployeeController {
      * @return
      */
     //由于查询功能前端传入的数据并不是head（json格式），所以传入参数不需要@Requestbody
-    @GetMapping("/page")
     //接口文档规定的路径为/admin/employee/page，由于在类上已经有requestmapping：/admin/employee，只需要加/page即可
+    @GetMapping("/page")
     @ApiOperation("员工分页查询")
     public Result<PageResult> page(EmployeePageQueryDTO employeePageQueryDTO){
         log.info("员工分页查询参数：{}",employeePageQueryDTO);
