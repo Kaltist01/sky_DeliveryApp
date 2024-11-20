@@ -52,4 +52,34 @@ public class CategoryServiceImpl implements CategoryService {
         category.setUpdateUser(BaseContext.getCurrentId());
         categoryMapper.insert(category);
     }
+
+    /**
+     * 新增分类
+     * @param categoryDTO
+     */
+    public void updateCategory(CategoryDTO categoryDTO) {
+        Category category = new Category();
+        BeanUtils.copyProperties(categoryDTO,category);
+        category.setStatus(StatusConstant.DISABLE);
+
+        category.setCreateTime(LocalDateTime.now());
+        category.setUpdateTime(LocalDateTime.now());
+        category.setCreateUser(BaseContext.getCurrentId());
+        category.setUpdateUser(BaseContext.getCurrentId());
+        categoryMapper.update(category);
+    }
+
+    /**
+     * 启用禁用分类
+     * @param status
+     * @param id
+     */
+    public void startOrStop(Integer status, Long id) {
+        Category category = new Category();
+        category.setStatus(status);
+        category.setId(id);
+        category.setUpdateTime(LocalDateTime.now());
+        category.setCreateUser(BaseContext.getCurrentId());
+        categoryMapper.update(category);
+    }
 }

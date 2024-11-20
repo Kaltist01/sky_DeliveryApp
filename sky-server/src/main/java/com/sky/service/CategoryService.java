@@ -19,4 +19,17 @@ public interface CategoryService {
      * @return
      */
     void addCategory(CategoryDTO categoryDTO);
+
+    /**
+     * 修改分类
+     * @param categoryDTO
+     */
+    void updateCategory(CategoryDTO categoryDTO);
+
+    /**
+     * 启用禁用分类
+     * @param status
+     * @param id
+     */
+    void startOrStop(Integer status, Long id);
 }
