@@ -86,16 +86,19 @@ public class DishServiceImpl implements DishService {
 
         List<Long> setmealIds=setMealDishMapper.getSetmealIdsByDishIds(ids);
         //菜品被套餐关联
-        if(setmealIds!= null &&setmealIds.size()>0){
+        if(setmealIds!= null && setmealIds.size()>0){
             throw new DeletionNotAllowedException(MessageConstant.DISH_BE_RELATED_BY_SETMEAL);
         }
         //可删除的话删除菜品表的菜品数据
-        for (Long id : ids) {
-            dishMapper.deleteById(id);
+//        for (Long id : ids) {
+//            dishMapper.deleteById(id);
+//            //删除菜品关联的口味数据
+//            dishFlavorMapper.deleteByDishId(id);
+//        }
 
-            dishFlavorMapper.deleteByDishId(id);
-        }
-        //删除菜品关联的口味数据
+//        //对以上代码进行优化，当id过多时仍每次执行两条sql语句会导致性能问题，优化为一次sql批量删除
+        dishFlavorMapper.deleteByDishIds(ids);
+        dishMapper.deleteByIds(ids);
     }
 
 
