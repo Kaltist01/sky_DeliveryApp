@@ -12,3 +12,9 @@ sky:
     access-key-id: LTAI5tLJXuVq9TqLPiCVky1j
     access-key-secret: Dm2T543529C8zffVdXctYsAhRpNK81
     bucket-name: web-kal
+
+  redis:
+    host: localhost
+    port: 6379
+    password: 123456
+    database: 0
