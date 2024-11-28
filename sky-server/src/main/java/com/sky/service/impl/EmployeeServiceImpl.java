@@ -121,16 +121,16 @@ public class EmployeeServiceImpl implements EmployeeService {
      */
     public void startOrStop(Integer status, Long id) {
         //写法1
-        Employee employee = new Employee();
-        employee.setStatus(status);
-        employee.setId(id);
+//        Employee employee = new Employee();
+//        employee.setStatus(status);
+//        employee.setId(id);
 
         //写法2
-//        Employee employee = Employee.builder()
-//                .status(status)
-//                .id(id)
-//                .build();
-//        employeeMapper.update(employee);
+        Employee employee = Employee.builder()
+                .status(status)
+                .id(id)
+                .build();
+        employeeMapper.update(employee);
     }
 
 
