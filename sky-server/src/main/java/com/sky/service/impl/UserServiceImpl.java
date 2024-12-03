@@ -60,4 +60,23 @@ public class UserServiceImpl implements UserService {
         //返回该用户对象
         return user;
     }
+
+    /**
+     * 调用微信接口服务，获取微信用户的openid
+     * @param code
+     * @return
+     */
+    private String getOpenid(String code){
+        //调用微信接口服务，获得当前微信用户的openid
+        Map<String, String> map = new HashMap<>();
+        map.put("appid",weChatProperties.getAppid());
+        map.put("secret",weChatProperties.getSecret());
+        map.put("js_code",code);
+        map.put("grant_type","authorization_code");
+        String json = HttpClientUtil.doGet(WX_LOGIN, map);
+
+        JSONObject jsonObject = JSON.parseObject(json);
+        String openid = jsonObject.getString("openid");
+        return openid;
+    }
 }
